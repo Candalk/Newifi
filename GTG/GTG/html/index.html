@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>GTG</title>
+<meta http-equtv="Content-Type" content="text/html; charset=UTF-8">
+<style type="text/css">
+	*{
+		margin:0 0;
+		font-family:'微软雅黑';
+	}
+	a{
+		text-decoration: none;
+	}
+	.demo_btn{
+		display: block;
+		width:66px;
+		height:26px;
+		background: url('/opt/app/GTG/html/button1.png');
+		text-align:center;
+	}
+	.demo_btn:hover{
+		background: url('/opt/app/GTG/html/button1_click.png');
+	}
+	
+	.demo_btn b{
+		display: block;
+		font-weight: 300;
+		font-size: 14px;
+		color:white;
+		padding-top: 2px;
+	}
+	.demo_save{
+		float:right;
+	}
+	.start_thread,.stop_thread{
+		margin-left: 15px;
+		float: left;
+	}
+	.runstatus{
+		float:right;
+		color:#F00;
+	}
+
+	.progress{
+		position:absolute;
+		bottom:10px;
+		right:10px;
+	}
+</style>
+</head>
+<body>
+<div class="content"
+	<div class="hello">
+	<div class="runstatus">...</div>
+		<button class='demo_btn start_thread'>开启</button>
+
+		<button class="demo_btn stop_thread">关闭</button>
+		<div class="progress"> 
+			<img src="/opt/app/GTG/html/progress.gif" width="176" height="220">
+		</div>
+	</div>
+</div>
+ </body>
+ <script type="text/javascript">
+ 	var.L=top.L;
+ 	L.xapi.appCmd('100000001','runstatus').then(function(ret){
+ 		if(ret.appcmd.data="Running."){
+ 			$('.runstatus').text('已启动');
+
+ 		}else{
+ 			$('.runstatus').text('已停止');
+ 		}
+
+ 	});
+
+ </script>
+</html>

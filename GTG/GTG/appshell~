@@ -1,0 +1,76 @@
+#!/bin/sh
+
+Parameter_all=$*
+Parameter_one=$1
+
+Postinst()
+{
+
+	local L_ExitStatus=0
+
+
+	echo "正在安装...." > /dev/console
+
+	sync
+
+	return ${L_ExitStatus}
+}
+Preuninst()
+{
+	local L_ExitStatus=0
+
+	echo "恢复hosts文件中" > /dev/console
+	echo "127.0.0.1 localhost
+	192.168.99.1 xyun.co
+	192.168.99.1 ok.go
+	192.168.99.1 wi.fi
+	192.168.99.1 newifi.com" > /etc/hosts
+	echo "恢复完成" > /dev/console
+	sync
+	/etc/init.d/network restart 
+	return ${L_ExitStatus}
+
+}
+Start()
+{	echo "Start()" > /dev/console
+	local L_ExitStatus=0
+	echo "正在更换hosts文件" > /dev/console
+	cat /opt/app/GTG/etc/hosts  > /etc/hosts
+	sync
+	echo "更换完成，即将刷新网络配置" > /dev/console
+	/etc/init.d/network restart 
+	
+	return ${L_ExitStatus}
+}
+
+Main()
+{	
+	//用于存放执行结果，0成功，非0失败
+	local  L_ExitStatus=0
+
+	if [ "${Parameter_one}" = "postinst" ]; then
+		#statements
+		#执行安装函数
+		echo "启动Postinst函数" > /dev/console
+		Postinst
+
+		#$?显示最后命令的退出状态，0表示没有错误，其他任何值表示有错误。
+		L_ExitStatus=$?
+	elif [ "${Parameter_one}" = "start" ]; then
+		echo "启动start函数" > /dev/console
+		Start
+
+		L_ExitStatus=$?
+	elif [ "${Parameter_one}" = "preuninst" ]; then
+		echo "启动卸载函数" > /dev/console
+		Preuninst
+		L_ExitStatus=$?
+	elif [ "${Parameter_one}" = "appcmd"]; then
+		echo "启动appcmd函数" > /dev/console
+		Appcmd
+			
+	fi
+
+	exit ${L_ExitStatus}
+}
+Main
