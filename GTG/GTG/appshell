@@ -31,18 +31,32 @@ Preuninst()
 	return ${L_ExitStatus}
 
 }
+
 Start()
 {	echo "Start()" > /dev/console
 	local L_ExitStatus=0
 	echo "正在更换hosts文件" > /dev/console
-	cat /opt/app/GTG/etc/hosts  > /etc/hosts
+	cp /opt/app/GTG/etc/hosts /etc/hosts
 	sync
-	echo "更换完成，即将刷新网络配置" > /dev/console
-	/etc/init.d/network restart 
-	
 	return ${L_ExitStatus}
 }
+Appcmd()
+{
+		local L_ExitStatus=0
 
+		if[ "$1" == "flush_DNS" ];then
+			/etc/init.d/network restart 
+			echo "flush_DNS" > /dev/console
+		elif [ "$1" == "update_hosts" ]; then
+			echo "update_hosts" > /dev/console
+			cd /opt/app/GTG/etc
+		    wget http://60.205.185.0/owncloud/index.php/s/6PGuN6LJPMuvFgi/download
+			mv download hosts
+		fi
+		
+		L_ExitStatus=0
+
+}
 Main()
 {	
 	//用于存放执行结果，0成功，非0失败
@@ -65,6 +79,14 @@ Main()
 		echo "启动卸载函数" > /dev/console
 		Preuninst
 		L_ExitStatus=$?
+	elif [ "${Parameter_one}" = "appcmd" ];then
+		cmdstr=$(echo "${Parameter_all#* }")
+		Appcmd ${cmdstr}
+		L_ExitStatus=$?
+
+	#无效接口参数
+	else
+		echo "ERR:Parameter Err."
 	fi
 
 	exit ${L_ExitStatus}

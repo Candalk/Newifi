@@ -2,76 +2,97 @@
 <html>
 <head>
 <title>GTG</title>
-<meta http-equtv="Content-Type" content="text/html; charset=UTF-8">
-<style type="text/css">
-	*{
-		margin:0 0;
-		font-family:'微软雅黑';
-	}
-	a{
-		text-decoration: none;
-	}
-	.demo_btn{
-		display: block;
-		width:66px;
-		height:26px;
-		background: url('/opt/app/GTG/html/button1.png');
-		text-align:center;
-	}
-	.demo_btn:hover{
-		background: url('/opt/app/GTG/html/button1_click.png');
-	}
-	
-	.demo_btn b{
-		display: block;
-		font-weight: 300;
-		font-size: 14px;
-		color:white;
-		padding-top: 2px;
-	}
-	.demo_save{
-		float:right;
-	}
-	.start_thread,.stop_thread{
-		margin-left: 15px;
-		float: left;
-	}
-	.runstatus{
-		float:right;
-		color:#F00;
-	}
+	<meta http-equtv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<script type="text/javascript" src="/newifi/jquery-1.9.1.js"></script>
 
-	.progress{
-		position:absolute;
-		bottom:10px;
-		right:10px;
-	}
-</style>
+	<style type="text/css">
+		*{
+			margin:0 0;
+			font-family: '微软雅黑';
+		}
+		/*超链接不显示下划线*/
+		a{
+			text-decoration: none;
+		}
+		/*列表不显示左端项目符号*/
+		ul{
+			list-style-type:none;
+		}
+		/* 配置项 */
+		.demo_content{
+			margin-top:20px;
+			width:260px;
+			height: 40px;
+		}
+		/*按钮*/
+		.demo_btn{
+			display: block;
+			width: 66px;
+			height: 26px;
+			background: url('/opt/app/SamplePluginC/html/button1.png');
+			text-align: center;
+		}
+		/*按钮的鼠标经过效果*/
+		.demo_btn:hover{
+			background: url('/opt/app/SamplePluginC/html/button1_click.png');	
+		}
+		/*按钮文字*/
+		.demo_btn b{
+			display: block;
+			font-weight: 300;
+			font-size:14px;
+			color:black;
+			padding-top:2px;
+		}
+		/*刷新网络、检查hosts更新*/
+		.flush_thread,.update_thread{
+			margin-left:25px;
+			float:left;
+		}
+		/* 进度提示 */
+		.progress{
+			position: absolute;
+			bottom: 10px;
+			right: 10px;
+		}
+	</style>
 </head>
 <body>
-<div class="content"
-	<div class="hello">
-	<div class="runstatus">...</div>
-		<button class='demo_btn start_thread'>开启</button>
-
-		<button class="demo_btn stop_thread">关闭</button>
-		<div class="progress"> 
-			<img src="/opt/app/GTG/html/progress.gif" width="176" height="220">
+	<div class="demo_content" >
+		<ul>
+		<li>
+			<a href="javascript:void(0)" class='demo_btn flush_thread'><b>刷新DNS</b></a>
+			<a href="javascript:void(0)" class='demo_btn update_thread'><b>检查更新</b></a>
+			<div class='progress'>
+		<img src="/opt/app/SamplePluginC/html/progress.gif" width="176" height="220">
 		</div>
+		</li>
+		</ul>
 	</div>
-</div>
- </body>
- <script type="text/javascript">
- 	var.L=top.L;
- 	L.xapi.appCmd('100000001','runstatus').then(function(ret){
- 		if(ret.appcmd.data="Running."){
- 			$('.runstatus').text('已启动');
+</body>
+<script type="text/javascript">
+	//获取对象接口
+	var L=top.L;
 
- 		}else{
- 			$('.runstatus').text('已停止');
- 		}
+	//刷新DNS
+	$('.flush_thread').on('click',function(){
+			window.alert("flush_thread");
+		L.xapi.appCmd('100000001','flush_DNS').then(function(ret){
+		
 
- 	});
+		});
 
- </script>
+	});
+	//检测更新
+	$('.update_thread').on('click',function(){
+		window.alert("update_hosts");
+		L.xapi.appCmd('100000001','update_hosts').then(function(ret){
+			
+
+		});
+
+	});
+</script>
 </html>
