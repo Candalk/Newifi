@@ -83,7 +83,7 @@
  	
 	//刷新DNS
 	$('.flush_thread').on('click',function(){
-		window.alert("确认刷新");	
+		window.alert("注意：这会使路由器临时断网！");	
 		$('.progress').show();
 		L.xapi.appCmd('100000001','flush_DNS').then(function(ret){
 		if ( ret.status == 0 )
