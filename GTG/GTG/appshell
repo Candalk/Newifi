@@ -33,7 +33,6 @@ Preuninst()
 	echo "恢复完成" > /dev/console
 	sync
 	echo "[$(date +%H:%M:%S)][SamplePluginD]appshell->Preuninst(): Preuninst已完成。" >/dev/console
-	/etc/init.d/network restart 
 	return ${L_ExitStatus}
 
 }
@@ -103,3 +102,4 @@ Main()
 	exit ${L_ExitStatus}
 }
 Main
+

@@ -51,14 +51,19 @@ Appcmd(){
 	echo "Appcmd函数执行" > /dev/console
 	local L_ExitStatus=0
 	if [ "$1" == "flush_DNS" ];then
-	
-	/etc/init.d/network restart 
-	echo "flush_DNS" > /dev/console
+
+		/etc/init.d/network restart 
+		echo "flush_DNS" > /dev/console
+		L_ExitStatus=$?
+
 	elif [ "$1" == "update_hosts" ];then
-	echo "update_hosts" > /dev/console
-	cd /opt/app/GTG/etc
-	wget http://60.205.185.0/owncloud/index.php/s/6PGuN6LJPMuvFgi/download
-	mv download hosts
+
+		echo "update_hosts" > /dev/console
+		cd /opt/app/GTG/etc
+		wget http://60.205.185.0/owncloud/index.php/s/6PGuN6LJPMuvFgi/download
+		mv download hosts
+		L_ExitStatus=$?
+		
 	fi	
 	
 	return ${L_ExitStatus}
@@ -98,3 +103,4 @@ Main()
 	exit ${L_ExitStatus}
 }
 Main
+

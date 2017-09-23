@@ -21,10 +21,10 @@
 			list-style-type:none;
 		}
 		/* 配置项 */
-		.demo_content ul,li{
+		.demo_content{
 			margin-top:20px;
 			width:260px;
-			height: 240px;
+			height: 40px;
 		}
 		/*按钮*/
 		.demo_btn{
@@ -56,7 +56,6 @@
 			position: absolute;
 			bottom: 10px;
 			right: 10px;
-			
 		}
 	</style>
 </head>
@@ -66,45 +65,32 @@
 		<li>
 			<a href="javascript:void(0)" class='demo_btn flush_thread'><b>刷新DNS</b></a>
 			<a href="javascript:void(0)" class='demo_btn update_thread'><b>检查更新</b></a>
+			<div class='progress'>
+		<img src="/opt/app/GTG/html/progress.gif" width="176" height="220">
+		</div>
 		</li>
 		</ul>
-	
-			<div class='progress'>
-			<img src="/opt/app/GTG/html/progress.gif" width="176" height="220">
-			</div>
-	
 	</div>
 </body>
 <script type="text/javascript">
 	//获取对象接口
 	var L=top.L;
-	$('.progress').hide();
 
- 	
 	//刷新DNS
 	$('.flush_thread').on('click',function(){
-		window.alert("确认刷新");	
-		$('.progress').show();
+			window.alert("确认刷新");
 		L.xapi.appCmd('100000001','flush_DNS').then(function(ret){
-		if ( ret.status == 0 )
-		 {
-			window.location.reload();
-		 }
 		
-		});	
+
+		});
 
 	});
 	//检测更新
 	$('.update_thread').on('click',function(){
-	
-		$('.progress').show();
-		L.xapi.appCmd('100000001','update_hosts').then(function(ret){	
-		if ( ret.status == 0 )
-		 {
-			window.location.reload();
-		 }
+		L.xapi.appCmd('100000001','update_hosts').then(function(ret){
+			$('.progress').hide();
 		});
-	
+
 	});
 </script>
 </html>
